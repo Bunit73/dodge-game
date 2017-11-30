@@ -1,17 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
+import Player from "./components/Player";
 import Score from "./components/Score";
 
 export default class App extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {score: 0};
-    }
-
   render() {
     return (
       <View style={styles.container}>
-          <Score s={this.state.score}/>
+        <Score/>
+        <Player/>
       </View>
     );
   }
