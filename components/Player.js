@@ -6,6 +6,7 @@
 import React, { Component } from "react";
 import { StyleSheet, PanResponder, View, Text } from "react-native";
 
+const Dimensions = require('Dimensions');
 const CIRCLE_SIZE = 40;
 const CIRCLE_COLOR = "blue";
 const CIRCLE_HIGHLIGHT_COLOR = "green";
@@ -42,8 +43,8 @@ class Player extends Component {
             onPanResponderRelease: this._handlePanResponderEnd,
             onPanResponderTerminate: this._handlePanResponderEnd
         });
-        this._previousLeft = 20;
-        this._previousTop = 84;
+        this._previousLeft = Dimensions.get('window').width*.45;
+        this._previousTop = Dimensions.get('window').height*.4;
         this._circleStyles = {
             style: { left: this._previousLeft, top: this._previousTop }
         };
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
         left: 0,
         top: 0
     },
-    container: { flex: 1, paddingTop: 64 }
+    container: { flex: 1, paddingTop: 100 }
 });
 
 export default Player;
