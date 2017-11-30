@@ -4,7 +4,7 @@
 "use strict";
 
 import React, { Component } from "react";
-import { StyleSheet, PanResponder, View, Text } from "react-native";
+import { StyleSheet, PanResponder, View } from "react-native";
 
 const Dimensions = require('Dimensions');
 const CIRCLE_SIZE = 40;
@@ -118,6 +118,13 @@ class Player extends Component {
         // Calculate current position using deltas
         this._circleStyles.style.left = this._previousLeft + gestureState.dx;
         this._circleStyles.style.top = this._previousTop + gestureState.dy;
+
+        // console.log(`Coords X:${gestureState.moveX} Y:${gestureState.moveY}`);
+
+        if(gestureState.moveY < 100){
+            this._circleStyles.style.top = 0;
+        }
+
         this._updatePosition();
     };
 
@@ -125,6 +132,10 @@ class Player extends Component {
         this._unHighlight();
         this._previousLeft += gestureState.dx;
         this._previousTop += gestureState.dy;
+
+        if(gestureState.moveY < 100){
+            this._previousTop = 0;
+        }
     };
 }
 
