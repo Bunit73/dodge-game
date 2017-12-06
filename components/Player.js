@@ -4,12 +4,14 @@
 "use strict";
 
 import React, { Component } from "react";
-import { StyleSheet, PanResponder, View, Text } from "react-native";
+import { StyleSheet, PanResponder, View } from "react-native";
 
 const Dimensions = require('Dimensions');
 const CIRCLE_SIZE = 40;
 const CIRCLE_COLOR = "blue";
 const CIRCLE_HIGHLIGHT_COLOR = "green";
+const WINDOW_WIDTH = Dimensions.get('window').width;
+const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 class Player extends Component {
     // Set some initial values.
@@ -43,8 +45,8 @@ class Player extends Component {
             onPanResponderRelease: this._handlePanResponderEnd,
             onPanResponderTerminate: this._handlePanResponderEnd
         });
-        this._previousLeft = Dimensions.get('window').width*.45;
-        this._previousTop = Dimensions.get('window').height*.4;
+        this._previousLeft = WINDOW_WIDTH *.45;
+        this._previousTop = WINDOW_HEIGHT *.4;
         this._circleStyles = {
             style: { left: this._previousLeft, top: this._previousTop }
         };
@@ -118,6 +120,26 @@ class Player extends Component {
         // Calculate current position using deltas
         this._circleStyles.style.left = this._previousLeft + gestureState.dx;
         this._circleStyles.style.top = this._previousTop + gestureState.dy;
+
+        console.log(`Coords X:${gestureState.moveX} Y:${gestureState.moveY}`);
+
+        if(gestureState.moveY < 100){
+            this._circleStyles.style.top = 0;
+        }
+
+        if(gestureState.moveY > WINDOW_HEIGHT - 2){
+            this._circleStyles.style.top =  WINDOW_HEIGHT * .875;//WINDOW_HEIGHT - CIRCLE_SIZE;
+            console.log(`Out of bottom X:${this._circleStyles.style.left} Y :${this._circleStyles.style.top}`);
+        }
+
+        if(gestureState.moveX < 1){
+            this._circleStyles.style.left = 1;
+        }
+
+        if(gestureState.moveX > WINDOW_WIDTH - 2){
+            this._circleStyles.style.left = WINDOW_WIDTH - 10;
+        }
+
         this._updatePosition();
     };
 
@@ -125,6 +147,22 @@ class Player extends Component {
         this._unHighlight();
         this._previousLeft += gestureState.dx;
         this._previousTop += gestureState.dy;
+
+        if(gestureState.moveY < 100){
+            this._previousTop = 0;
+        }
+
+        if(gestureState.moveY > WINDOW_HEIGHT - 2){
+            this._previousTop = WINDOW_HEIGHT * .875;//WINDOW_HEIGHT - CIRCLE_SIZE;
+        }
+
+        if(gestureState.moveX < 1){
+            this._previousLeft = 1;
+        }
+
+        if(gestureState.moveX > WINDOW_WIDTH - 2){
+            this._previousLeft = WINDOW_WIDTH - 10;
+        }
     };
 }
 
