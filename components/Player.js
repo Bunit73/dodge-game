@@ -45,8 +45,8 @@ class Player extends Component {
             onPanResponderRelease: this._handlePanResponderEnd,
             onPanResponderTerminate: this._handlePanResponderEnd
         });
-        this._previousLeft = WINDOW_WIDTH *.45;
-        this._previousTop = WINDOW_HEIGHT *.4;
+        this._previousLeft = WINDOW_WIDTH * .5;
+        this._previousTop =  WINDOW_HEIGHT *.5 - 80;
         this._circleStyles = {
             style: { left: this._previousLeft, top: this._previousTop }
         };
@@ -58,15 +58,13 @@ class Player extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View
-                    ref={circle => {
-                        this.circle = circle;
+            <View
+                ref={circle => {
+                    this.circle = circle;
                     }}
-                    style={styles.circle}
-                    {...this._panResponder.panHandlers}
-                />
-            </View>
+                style={styles.circle}
+                {...this._panResponder.panHandlers}
+            />
         );
     }
 
@@ -87,6 +85,7 @@ class Player extends Component {
     // We're controlling the circle's position directly with setNativeProps.
     _updatePosition = () => {
         this.circle && this.circle.setNativeProps(this._circleStyles);
+        this.props.updateCords(this._circleStyles.style.left, this._circleStyles.style.top)
     };
 
     _handleStartShouldSetPanResponder = (event, gestureState) => {
@@ -121,23 +120,23 @@ class Player extends Component {
         this._circleStyles.style.left = this._previousLeft + gestureState.dx;
         this._circleStyles.style.top = this._previousTop + gestureState.dy;
 
-        console.log(`Coords X:${gestureState.moveX} Y:${gestureState.moveY}`);
+        // console.log(`Coords X:${gestureState.moveX} Y:${gestureState.moveY}`);
 
         if(gestureState.moveY < 100){
             this._circleStyles.style.top = 0;
         }
 
-        if(gestureState.moveY > WINDOW_HEIGHT - 2){
+        if(gestureState.moveY > WINDOW_HEIGHT - 5){
             this._circleStyles.style.top =  WINDOW_HEIGHT * .875;//WINDOW_HEIGHT - CIRCLE_SIZE;
-            console.log(`Out of bottom X:${this._circleStyles.style.left} Y :${this._circleStyles.style.top}`);
+            // console.log(`Out of bottom X:${this._circleStyles.style.left} Y :${this._circleStyles.style.top}`);
         }
 
         if(gestureState.moveX < 1){
-            this._circleStyles.style.left = 1;
+            this._circleStyles.style.left = -20;
         }
 
         if(gestureState.moveX > WINDOW_WIDTH - 2){
-            this._circleStyles.style.left = WINDOW_WIDTH - 10;
+            this._circleStyles.style.left = WINDOW_WIDTH * .95;
         }
 
         this._updatePosition();
@@ -157,11 +156,11 @@ class Player extends Component {
         }
 
         if(gestureState.moveX < 1){
-            this._previousLeft = 1;
+            this._previousLeft = -20;
         }
 
-        if(gestureState.moveX > WINDOW_WIDTH - 2){
-            this._previousLeft = WINDOW_WIDTH - 10;
+        if(gestureState.moveX > WINDOW_WIDTH - 5){
+            this._previousLeft = WINDOW_WIDTH * .95;
         }
     };
 }
@@ -175,8 +174,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         left: 0,
         top: 0
-    },
-    container: { flex: 1, paddingTop: 100 }
+    }
 });
 
 export default Player;

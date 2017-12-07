@@ -1,15 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import Player from "./components/Player";
 import Score from "./components/Score";
+import Board from "./components/Board";
 
 export default class App extends React.Component {
+
+  constructor(props){
+      super(props);
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
         <Score/>
-        <Player/>
+        <Board/>
       </View>
     );
   }
