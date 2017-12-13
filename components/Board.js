@@ -17,7 +17,6 @@ class Board extends  Component {
 
     updatePlayerCords = (x,y) => {
         this.setState({playerCords: {'x': x, 'y': y }});
-        // console.log(this.state);
         this.testCollision();
     };
 
@@ -27,7 +26,6 @@ class Board extends  Component {
             bulletCords: [...this.state.bulletCords, {id: id, x: x, y: y, r: r}]
 
         });
-        //this.setState({bulletCords: this.state.bulletCords.concat({id: id, x: -100, y: -100})});
     };
 
     updateBulletCords = ( id, x, y) => {
@@ -39,7 +37,7 @@ class Board extends  Component {
                 break;
             }
         }
-        // this.setState({bulletCords: bullets});
+        this.testCollision();
         // console.log(this.state);
     };
 
@@ -72,6 +70,7 @@ class Board extends  Component {
                     initBullet={this.addBullet}
                     updateCords={this.updateBulletCords}
                 />
+
             </View>
         )
     }

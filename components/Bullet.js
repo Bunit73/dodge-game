@@ -20,32 +20,93 @@ class Bullet extends Component {
         this.state = {
             id: (new Date).getTime(),
             x: 0,
-            y: 0
+            y: 0,
+            moveX:0,
+            moveY:0,
+            speed: 1
         };
         this.props.initBullet(this.state.id, -100, -100, BULLET_SIZE);
         setInterval(()=>{
-            this.moveBullet();
-        },1000);
+            this._moveBullet(this.state.moveX,this.state.moveY);
+        },10);
     }
 
     componentWillMount(){
-        this._previousLeft = 200;
-        this._previousTop = -10;
-        this._bulletStyles = {
-            style: {left: this._previousLeft, top: this._previousTop}
-        };
+        this._resetPosition();
+
     }
 
     componentDidMount(){
         this._updatePosition();
     }
 
-    moveBullet(){
-        // Calculate current position using deltas
-        // this._circleStyles.style.left = this._previousLeft + gestureState.dx;
-        this._bulletStyles.style.top = this._bulletStyles.style.top + 10;
+    _moveBullet(left,top){
+        top = (typeof top !== 'undefined') ?  top : 1;
+        left = (typeof left !== 'undefined') ?  left : 1;
+
+        this._bulletStyles.style.top = this._bulletStyles.style.top + top;
+        this._bulletStyles.style.left = this._bulletStyles.style.left + left;
+
+        //Rest if out of bounds
+        if(this._bulletStyles.style.top > WINDOW_HEIGHT + 10
+            || this._bulletStyles.style.top < -10
+            || this._bulletStyles.style.left > WINDOW_WIDTH + 10
+            || this._bulletStyles.style.left < -10
+        ){
+            this._resetPosition();
+        }
+
         this._updatePosition();
     }
+
+    _resetPosition(){
+        let spawnVertical = Math.random() >= 0.5;
+        let x = Math.random() * WINDOW_WIDTH;
+        let y = Math.random() * WINDOW_HEIGHT;
+
+        let moveX = 0;
+        let moveY = 0;
+
+
+        if(spawnVertical){
+            let spawnTop = Math.random() >= 0.5;
+            if(spawnTop){
+                y = 0;
+                moveY = (Math.random() * ( 2 - 1) + 1) * this.state.speed;
+            } else{
+                y = WINDOW_HEIGHT;
+                moveY = (Math.random() * ( 2 - 1) + 1) * -1 * this.state.speed;
+            }
+        } else {
+            let spawnLeft = Math.random() >= 0.5;
+            if(spawnLeft){
+                x = 0;
+                moveX = (Math.random() * ( 2 - 1) + 1) * this.state.speed;
+            } else{
+                x = WINDOW_WIDTH;
+                moveX = (Math.random() * ( 2 - 1) + 1) * -1 * this.state.speed;
+            }
+        }
+
+        let speed = this.state.speed + .25;
+        this.setState({speed: speed});
+
+
+        this._setBulletCourse(moveX,moveY);
+
+        this._bulletStyles = {
+            style: {left: x, top: y}
+        };
+    }
+
+    _setBulletCourse(x,y){
+        // console.log(`X: ${x} Y: ${y}`);
+        this.setState({
+            moveX: x,
+            moveY: y
+        });
+    }
+
 
     render() {
         return (
