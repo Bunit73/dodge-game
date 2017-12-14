@@ -63,6 +63,9 @@ class Board extends  Component {
     };
 
     gameOver = () => {
+        if(this.state.gameOver){
+            this.props.setGameState('end');
+        }
         return this.state.gameOver;
     };
 

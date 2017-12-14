@@ -14,8 +14,12 @@ class Score extends Component {
     }
 
     componentWillMount() {
-        setInterval(() => {
-            this._updateScore(1)
+        let calculateScore = setInterval(() => {
+            if(this.props.getGameState()=== 'end'){
+                clearInterval(calculateScore);
+            } else {
+                this._updateScore(1);
+            }
         },1000);
     }
 
