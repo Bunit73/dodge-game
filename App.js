@@ -1,17 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
 import Score from "./components/Score";
+import Board from "./components/Board";
 
 export default class App extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {score: 0};
-    }
+
+  constructor(props){
+      super(props);
+  }
+
 
   render() {
     return (
       <View style={styles.container}>
-          <Score s={this.state.score}/>
+        <Score/>
+        <Board/>
       </View>
     );
   }
