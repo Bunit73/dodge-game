@@ -10,8 +10,6 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 class Bullet extends Component {
-    _previousLeft = 0;
-    _previousTop = 0;
     _bulletStyles = {};
     bullet = null;
 
@@ -26,7 +24,11 @@ class Bullet extends Component {
             speed: 1
         };
         this.props.initBullet(this.state.id, -100, -100, BULLET_SIZE);
-        setInterval(()=>{
+        let updateScreen = setInterval(()=>{
+            if(this.props.gameOverCheck()){
+                console.log('game over');
+                clearInterval(updateScreen);
+            }
             this._moveBullet(this.state.moveX,this.state.moveY);
         },10);
     }

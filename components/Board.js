@@ -11,7 +11,8 @@ class Board extends  Component {
 
         this.state = {
             playerCords: {x: 0, y: 0 },
-            bulletCords: []
+            bulletCords: [],
+            gameOver: false
         }
     }
 
@@ -22,9 +23,10 @@ class Board extends  Component {
 
 
     addBullet = (id, x, y, r) => {
+        let newCords = this.state.bulletCords;
+        newCords.push({id: id, x: x, y: y, r: r});
         this.setState({
-            bulletCords: [...this.state.bulletCords, {id: id, x: x, y: y, r: r}]
-
+            bulletCords: newCords
         });
     };
 
@@ -38,7 +40,7 @@ class Board extends  Component {
             }
         }
         this.testCollision();
-        // console.log(this.state);
+        // console.log(this.state.bulletCords);
     };
 
     testCollision = () => {
@@ -54,12 +56,14 @@ class Board extends  Component {
 
             )
             {
-              //   console.log(`player cords: X: ${player.x} Y: ${player.y}
-              // bullet cords X: ${bullet.x} Y: ${bullet.y} `);
-                console.log('ded');
+                this.setState({gameOver: true});
                 break;
             }
         }
+    };
+
+    gameOver = () => {
+        return this.state.gameOver;
     };
 
     render() {
@@ -69,6 +73,27 @@ class Board extends  Component {
                 <Bullet
                     initBullet={this.addBullet}
                     updateCords={this.updateBulletCords}
+                    gameOverCheck={this.gameOver}
+                />
+                <Bullet
+                    initBullet={this.addBullet}
+                    updateCords={this.updateBulletCords}
+                    gameOverCheck={this.gameOver}
+                />
+                <Bullet
+                    initBullet={this.addBullet}
+                    updateCords={this.updateBulletCords}
+                    gameOverCheck={this.gameOver}
+                />
+                <Bullet
+                    initBullet={this.addBullet}
+                    updateCords={this.updateBulletCords}
+                    gameOverCheck={this.gameOver}
+                />
+                <Bullet
+                    initBullet={this.addBullet}
+                    updateCords={this.updateBulletCords}
+                    gameOverCheck={this.gameOver}
                 />
 
             </View>
