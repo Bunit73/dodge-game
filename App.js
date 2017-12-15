@@ -1,8 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import renderIf from "./helpers/renderif";
+
 import Score from "./components/Score";
 import Board from "./components/Board";
+import GameOver from "./components/GameOver";
 
 export default class App extends React.Component {
 
@@ -14,7 +17,6 @@ export default class App extends React.Component {
   }
 
   setGameState = (state) => {
-      // console.log('set state')
       this.setState({
           gameState: state
       });
@@ -34,6 +36,11 @@ export default class App extends React.Component {
         <Board
             setGameState={this.setGameState}
         />
+        {renderIf((this.state.gameState === 'end'),
+            <GameOver
+                setGameState={this.setGameState}
+            />
+        )}
       </View>
     );
   }
