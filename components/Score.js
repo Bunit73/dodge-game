@@ -7,33 +7,28 @@ class Score extends Component {
 
     constructor(props){
         super(props);
-        this.state = {
-            s: 0
-        };
-
     }
 
-    componentWillMount() {
-        let calculateScore = setInterval(() => {
-            if(this.props.getGameState()=== 'end'){
-                clearInterval(calculateScore);
-            } else {
-                this._updateScore(1);
-            }
-        },1000);
+    componentDidMount() {
+        this._startScoring();
     }
 
     render () {
         return (
             <View style={styles.container}>
-                <Text style={styles.scoreText}>Score: {this.state.s}</Text>
+                <Text style={styles.scoreText}>Score: {this.props.score}</Text>
             </View>
         )
     }
 
-    _updateScore(val){
-        score = this.state.s += val;
-        this.setState({s: score});
+    _startScoring(){
+        let calculateScore = setInterval(() => {
+            if(this.props.getGameState() === 'end'){
+
+            } else {
+                this.props.updateScore(1 + this.props.score);
+            }
+        },1000);
     }
 }
 

@@ -11,6 +11,7 @@ class GameOver extends Component{
     _newGame = () => {
         console.log('new game');
         this.props.setGameState('new');
+        this.props.updateScore(0);
     };
 
     render(){
@@ -18,6 +19,9 @@ class GameOver extends Component{
             <View style={styles.overlay}>
                 <Text style={styles.messageText}>
                     Game Over
+                </Text>
+                <Text style={styles.messageText}>
+                    Score: {this.props.score}
                 </Text>
                 <Button
                     title="New Game"
@@ -39,7 +43,7 @@ const styles = StyleSheet.create({
         top: 0,
         right: 0,
         bottom: 0,
-        opacity: 0.5,
+        opacity: 1,
         backgroundColor: '#666666'
     },
     messageText:{

@@ -12,7 +12,9 @@ export default class App extends React.Component {
   constructor(props){
       super(props);
       this.state = {
-          gameState: 'new'
+          gameState: 'home',
+          score: 0,
+          highScore: 0
       }
   }
 
@@ -26,18 +28,28 @@ export default class App extends React.Component {
       return this.state.gameState;
   };
 
+  updateScore = (val) => {
+      this.setState({
+          score: val
+      })
+  };
+
 
   render() {
     return (
       <View style={styles.container}>
         <Score
+            score={this.state.score}
             getGameState={this.getGameState}
+            updateScore={this.updateScore}
         />
         <Board
             setGameState={this.setGameState}
         />
         {renderIf((this.state.gameState === 'end'),
             <GameOver
+                score={this.state.score}
+                updateScore={this.updateScore}
                 setGameState={this.setGameState}
             />
         )}
