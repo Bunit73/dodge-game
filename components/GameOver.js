@@ -12,6 +12,7 @@ class GameOver extends Component{
         console.log('new game');
         this.props.setGameState('new');
         this.props.updateScore(0);
+        this.props.resetGame();
     };
 
     render(){

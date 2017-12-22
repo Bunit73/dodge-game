@@ -23,6 +23,19 @@ class Bullet extends Component {
             moveY:0,
             speed: 1
         };
+    }
+
+    componentWillMount(){
+        this.createBullet();
+        this._resetPosition();
+
+    }
+
+    componentDidMount(){
+        this._updatePosition();
+    }
+
+    createBullet = () =>{
         this.props.initBullet(this.state.id, -100, -100, BULLET_SIZE);
         let updateScreen = setInterval(()=>{
             if(this.props.gameOverCheck()){
@@ -31,16 +44,7 @@ class Bullet extends Component {
             }
             this._moveBullet(this.state.moveX,this.state.moveY);
         },10);
-    }
-
-    componentWillMount(){
-        this._resetPosition();
-
-    }
-
-    componentDidMount(){
-        this._updatePosition();
-    }
+    };
 
     _moveBullet(left,top){
         top = (typeof top !== 'undefined') ?  top : 1;

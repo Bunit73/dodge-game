@@ -69,31 +69,40 @@ class Board extends  Component {
         return this.state.gameOver;
     };
 
+    resetBoard = () => {
+        console.log('reset board');
+        this.setState({
+            gameOver: false,
+            bulletCords: []
+        });
+
+        this.refs.bullet1.createBullet();
+        this.refs.bullet2.createBullet();
+
+        this.refs.bullet1._moveBullet(-100,-100);
+        this.refs.bullet2._moveBullet(-100,-100);
+
+        // this.refs.bullet1.createBullet();
+        // this.refs.bullet1._resetPosition();
+        // this.refs.bullet1._updatePosition();
+        //
+        // this.refs.bullet2.createBullet();
+        // this.refs.bullet2._resetPosition();
+        // this.refs.bullet2._updatePosition();
+    };
+
     render() {
         return(
             <View style={styles.container}>
                 <Player updateCords={this.updatePlayerCords}/>
                 <Bullet
+                    ref='bullet1'
                     initBullet={this.addBullet}
                     updateCords={this.updateBulletCords}
                     gameOverCheck={this.gameOver}
                 />
                 <Bullet
-                    initBullet={this.addBullet}
-                    updateCords={this.updateBulletCords}
-                    gameOverCheck={this.gameOver}
-                />
-                <Bullet
-                    initBullet={this.addBullet}
-                    updateCords={this.updateBulletCords}
-                    gameOverCheck={this.gameOver}
-                />
-                <Bullet
-                    initBullet={this.addBullet}
-                    updateCords={this.updateBulletCords}
-                    gameOverCheck={this.gameOver}
-                />
-                <Bullet
+                    ref='bullet2'
                     initBullet={this.addBullet}
                     updateCords={this.updateBulletCords}
                     gameOverCheck={this.gameOver}

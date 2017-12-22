@@ -34,6 +34,10 @@ export default class App extends React.Component {
       })
   };
 
+  resetGame = () => {
+      this.refs.board.resetBoard();
+  };
+
 
   render() {
     return (
@@ -44,6 +48,7 @@ export default class App extends React.Component {
             updateScore={this.updateScore}
         />
         <Board
+            ref='board'
             setGameState={this.setGameState}
         />
         {renderIf((this.state.gameState === 'end'),
@@ -51,6 +56,7 @@ export default class App extends React.Component {
                 score={this.state.score}
                 updateScore={this.updateScore}
                 setGameState={this.setGameState}
+                resetGame={this.resetGame}
             />
         )}
       </View>
